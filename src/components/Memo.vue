@@ -22,8 +22,8 @@
           ref="editInput"
           v-if="memo.isEditable"
           v-model="memo.content" 
-          @blur="toggleMemoEditable(index)"
-          @keyup.enter.native="toggleMemoEditable(index)"
+          @blur="disableMemoEditable(index)"
+          @keyup.enter.native="disableMemoEditable(index)"
           placeholder="请输入内容"
           size="small"
           clearable
@@ -36,7 +36,7 @@
           {{ memo.content }}
         </span>
         <div class="operations">
-          <i class="el-icon-edit-outline" @click="toggleMemoEditable(index)"/>
+          <i class="el-icon-edit-outline" @click="makeMemoEditable(index)"/>
           <i class="el-icon-delete" @click="deleteMemo(index)"/>
         </div>
       </li>
@@ -78,14 +78,17 @@ export default {
       this.memoList.splice(index, 1)
       this.saveMemo()
     },
-    toggleMemoEditable(index) {
-      this.memoList[index].isEditable = !this.memoList[index].isEditable
+    makeMemoEditable(index) {
+      this.memoList[index].isEditable = true
       this.$nextTick(() => {
         if (this.memoList[index].isEditable) {
           this.$refs['editInput'][0].focus()
         }
       })
     },
+    disableMemoEditable(index) {
+      this.memoList[index].isEditable = false
+    }
   },
 }
 </script>
