@@ -61,6 +61,10 @@ export default {
       this.$nextTick(() => Storage.saveMemo(this.memoList))
     },
     addMemo() {
+      if (this.input.trim().length === 0) {
+        return
+      }
+
       this.memoList.unshift({
         isDone: false,
         isEditable: false,
@@ -75,10 +79,8 @@ export default {
       this.saveMemo()
     },
     toggleMemoEditable(index) {
-      console.log('---', index)
       this.memoList[index].isEditable = !this.memoList[index].isEditable
       this.$nextTick(() => {
-        console.log('nexttick', this.memoList[index].isEditable)
         if (this.memoList[index].isEditable) {
           this.$refs['editInput'][0].focus()
         }
