@@ -1,19 +1,23 @@
-import { v4 as uuidv4 } from 'uuid';
+import * as CONST from './const'
+
+const findIndex = (memos = [], id) => {
+  const index = memos.findIndex((item) => item.id === id)
+
+  return index
+}
 
 const mutations = {
-  addMemo (state, content) {
+  [CONST.ADD_MEMO] (state, data) {
     state.memos.push({
-      id: uuidv4(),
-      isDone: false,
-      isEditable: false,
-      content,
+      ...data,
       ts: Date.now(),
     })
   },
 
-  removeMemo (state, { id }) {
+  [CONST.DELETE_MEMO] (state, { id }) {
     const { memos = [] } = state
-    const index = memos.findIndex((item) => item.id = id)
+    const index = findIndex(memos, id)
+
     if (index === -1) {
       throw new Error(`Not found ${id}`)
     }
@@ -21,7 +25,16 @@ const mutations = {
     memos.splice(index, 1)
   },
 
-  editMemo (state, { content, id} )
+  [CONST.EDIT_MEMO] (state, data) {
+    const { memos = [] } = state
+    const { id } = data
+    const index = findIndex(memos, id)
+    if (index === -1) {
+      throw new Error(`Not found ${id}`)
+    }
+
+    Object.assign(memos[index], data)
+  }
 }
 
 export default mutations
