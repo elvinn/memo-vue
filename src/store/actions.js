@@ -12,7 +12,6 @@ const actions = {
   },
 
   deleteMemo({ commit }, data) {
-    console.log('---', data)
     commit(CONST.DELETE_MEMO, data)
   },
 

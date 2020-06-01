@@ -5,7 +5,6 @@
     @change="toggle"
   />
   <el-input
-    ref="editInput"
     v-if="isEditable"
     v-model="text" 
     placeholder="请输入内容"
@@ -51,6 +50,7 @@ export default {
     ...mapActions([
       'editMemo',
       'deleteMemo',
+      'toggleMemo',
     ]),
     startEdit() {
       this.isEditable = true
@@ -63,7 +63,7 @@ export default {
       })
     },
     toggle() {
-      this.$store.dispatch('toggleMemo', {
+      this.toggleMemo({
         id: this.memo.id,
       })
     }
