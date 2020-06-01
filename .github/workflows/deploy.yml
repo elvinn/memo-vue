@@ -3,8 +3,6 @@ name: Deploy Github Pages
 on:
   push:
     branches: [ master ]
-  pull_request:
-    branches: [ master ]
 
 jobs:
   build:
@@ -16,6 +14,9 @@ jobs:
       - name: Setup
         run: npm ci
         
+      - name: Lint
+        run: npm run lint
+
       - name: Build
         run: npm run build
       
