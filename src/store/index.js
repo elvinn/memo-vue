@@ -13,7 +13,7 @@ const store = new Vuex.Store({
   state() {
     let memos = []
     try {
-      memos = JSON.parse(localStorage.getItem(STORAGE_KEY))
+      memos = JSON.parse(localStorage.getItem(STORAGE_KEY)) || []
     } catch (e) {
       console.error('Get memos storage failed', e)
     }
