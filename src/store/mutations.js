@@ -8,7 +8,7 @@ const findIndex = (memos = [], id) => {
 
 const mutations = {
   [CONST.ADD_MEMO] (state, data) {
-    state.memos.push({
+    state.memos.unshift({
       ...data,
       ts: Date.now(),
     })
