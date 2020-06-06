@@ -1,6 +1,10 @@
 import * as CONST from './const'
 
 const findIndex = (memos = [], id) => {
+  if (!id) {
+    return -1
+  }
+
   const index = memos.findIndex((item) => item.id === id)
 
   return index

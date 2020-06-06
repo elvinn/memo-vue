@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h2>备忘录</h2>
     <el-input
       autofocus
       clearable

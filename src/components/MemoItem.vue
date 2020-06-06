@@ -29,6 +29,7 @@
 
 <script>
 import { mapActions } from 'vuex'
+
 export default {
   name: 'MemoItem',
   props: ['memo'],
