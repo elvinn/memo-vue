@@ -36,10 +36,6 @@ export default {
     justify-content: space-between;
   }
 
-  .right {
-    align-self: flex-end;
-  }
-
   .dropdown-link {
     cursor: pointer;
   }
