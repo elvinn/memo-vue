@@ -1,15 +1,18 @@
 <template>
   <div id="app">
-    <memo/>
+    <Header />
+    <Memo />
   </div>
 </template>
 
 <script>
+import Header from './components/Header'
 import Memo from './components/Memo'
 
 export default {
   name: 'app',
   components: {
+    Header,
     Memo,
   }
 }
@@ -22,7 +25,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin: 0 30px;
 }
 
 ul, li {

@@ -28,6 +28,22 @@ const actions = {
       text,
     })
   },
+
+  clearDoneMemo({ commit, state: { memos = [] } }) {
+    for (let i = memos.length - 1; i >= 0; i--) {
+      const memo = memos[i]
+
+      if (memo.isDone) {
+        commit(CONST.DELETE_MEMO, memo)
+      }
+    }
+  },
+    
+  clearAllMemo({ commit, state: { memos = [] } }) {
+    for (let i = memos.length - 1; i >= 0; i--) {
+      commit(CONST.DELETE_MEMO, memos[i])
+    }
+  },
 }
 
 export default actions
