@@ -38,5 +38,8 @@ export default {
 
   .dropdown-link {
     cursor: pointer;
+    &:hover {
+      color: #409EFF;
+    }
   }
 </style>
