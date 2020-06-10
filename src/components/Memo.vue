@@ -5,7 +5,9 @@
       clearable
       placeholder="记点什么吧？"
       v-model="input"
-      @keyup.enter.native="addMemo"
+      @compositionstart.native="isInComposition = true"
+      @compositionend.native="isInComposition = false"
+      @keydown.enter.native="addMemo"
     />
     <ul class="memo-list">
       <MemoItem
@@ -26,6 +28,7 @@ export default {
   data() {
     return {
       input: '',
+      isInComposition: false, // 正在用中日韩等输入法进行输入
     }
   },
   computed: {
@@ -35,6 +38,10 @@ export default {
   },
   methods: {
     addMemo() {
+      if (this.isInComposition) {
+        return;
+      }
+
       const input = this.input.trim()
 
       if (input) {
