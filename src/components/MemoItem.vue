@@ -11,9 +11,7 @@
     size="small"
     clearable
     @blur="endEdit"
-    @compositionstart.native="isInComposition = true"
-    @compositionend.native="isInComposition = false"
-    @keydown.enter.native="endEdit"
+    @change.native="endEdit"
   />
   <span
     v-else
@@ -37,7 +35,6 @@ export default {
   props: ['memo'],
   data() {
     return {
-      isInComposition: false, // 正在用中日韩等输入法进行输入
       isEditable: false,
       text: '',
     }
@@ -60,10 +57,6 @@ export default {
       this.isEditable = true
     },
     endEdit() {
-      if (this.isInComposition) {
-        return
-      }
-
       this.isEditable = false
       this.editMemo({
         id: this.memo.id,
