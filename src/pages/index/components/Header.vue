@@ -25,7 +25,7 @@
 
 <script>
 import { mapActions } from 'vuex'
-import login from '../tools/login'
+import login from '../../../tools/login'
 
 export default {
   name: 'Header',
