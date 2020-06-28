@@ -13,10 +13,11 @@
       </el-dropdown>
       <el-dropdown class="operation-item">
         <span class="dropdown-link">
-          登录
+          {{ isCustomAuth ? (nickName || '已登录') : '登录' }}
         </span>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item @click.native="handleGithubLogin">Github 登录</el-dropdown-item>
+          <el-dropdown-item v-if="isCustomAuth" @click.native="signOut">退出登录</el-dropdown-item>
+          <el-dropdown-item v-else @click.native="handleGithubLogin">Github 登录</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </div>
@@ -26,9 +27,19 @@
 <script>
 import { mapActions } from 'vuex'
 import login from '../../../tools/login'
+import cloudBase from '../../../tools/tcb'
 
 export default {
   name: 'Header',
+  data() {
+    return {
+      isCustomAuth: false,
+      nickName: '',
+    }
+  },
+  created() {
+    cloudBase.onLoginStateChanged(this.onLoginStateChanged)
+  },
   methods: {
     ...mapActions([
       'clearDoneMemo',
@@ -36,6 +47,16 @@ export default {
     ]),
     handleGithubLogin() {
       login.jumpGithub()
+    },
+    async signOut() {
+      await login.signOut()
+      location.reload()
+    },
+    async onLoginStateChanged(loginState) {
+      loginState = loginState || {}
+      this.isCustomAuth = loginState.isCustomAuth
+      const userInfo = await cloudBase.getUserInfo()
+      this.nickName = userInfo.nickName
     }
   }
 }

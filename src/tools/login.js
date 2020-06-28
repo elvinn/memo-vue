@@ -1,3 +1,5 @@
+import cloudBase from './tcb'
+
 class Login {
   constructor() {
     this.clientId = 'c6ce12053e8fa1513f98'
@@ -7,21 +9,52 @@ class Login {
     window.open(`https://github.com/login/oauth/authorize?client_id=${this.clientId}`)
   }
 
-  login({
+  async getOauthInfo({
     from,
     code,
   }) {
-    switch (from) {
-      case 'github':
-        return this.loginFromGithub(code);
-      default:
-        return -1;
+    const {
+      ret,
+      data: {
+        ticket,
+        nickName,
+        avatarUal,
+      } = {},
+    } = await cloudBase.callFunction({
+      name: 'oauth',
+      data: {
+        type: from,
+        code,
+      }
+    })
+
+    if (ret) {
+      return
+    }
+
+    return {
+      ticket,
+      nickName,
+      avatarUal,
     }
   } 
 
-  loginFromGithub(code) {
-    console.log('code', code);
-    return 0;
+  async login({
+    from,
+    code,
+  }) {
+    const oauthInfo = await this.getOauthInfo({ from, code })
+    if (!oauthInfo) {
+      throw new Error('登陆失败')
+    }
+    
+    await cloudBase.loginByTicket(oauthInfo.ticket)
+
+    return oauthInfo
+  }
+
+  async signOut() {
+    return cloudBase.signOut()
   }
 }
 
