@@ -1,4 +1,4 @@
-// 支持跨 tab 的全局事件系统
+// 用于跨页面的全局事件系统
 
 const STORAGE_KEY = 'global_event';
 

@@ -13,10 +13,10 @@
       </el-dropdown>
       <el-dropdown class="operation-item">
         <span class="dropdown-link">
-          {{ isCustomAuth ? (nickName || '已登录') : '登录' }}
+          {{ hasLogin ? (nickName || '已登录') : '登录' }}
         </span>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item v-if="isCustomAuth" @click.native="signOut">退出登录</el-dropdown-item>
+          <el-dropdown-item v-if="hasLogin" @click.native="signOut">退出登录</el-dropdown-item>
           <el-dropdown-item v-else @click.native="handleGithubLogin">Github 登录</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -33,7 +33,7 @@ export default {
   name: 'Header',
   data() {
     return {
-      isCustomAuth: false,
+      hasLogin: false,
       nickName: '',
     }
   },
@@ -53,8 +53,12 @@ export default {
       location.reload()
     },
     async onLoginStateChanged(loginState) {
-      loginState = loginState || {}
-      this.isCustomAuth = loginState.isCustomAuth
+      if (!loginState || typeof loginState !== 'object') {
+        return;
+      }
+
+      this.hasLogin = loginState.hasLogin
+
       const userInfo = await cloudBase.getUserInfo()
       this.nickName = userInfo.nickName
     }

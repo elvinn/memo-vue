@@ -67,7 +67,7 @@ export default {
 
     countDown() {
       if (this.leftSeconds < 0) {
-        this.leftSeconds = 5
+        this.leftSeconds = 3
       }
 
       if (this.leftSeconds > 0) {

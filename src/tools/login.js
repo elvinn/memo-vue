@@ -1,12 +1,8 @@
 import cloudBase from './tcb'
 
 class Login {
-  constructor() {
-    this.clientId = 'c6ce12053e8fa1513f98'
-  }
-
   jumpGithub() {
-    window.open(`https://github.com/login/oauth/authorize?client_id=${this.clientId}`)
+    window.open('https://github.com/login/oauth/authorize?client_id=c6ce12053e8fa1513f98')
   }
 
   async getOauthInfo({
