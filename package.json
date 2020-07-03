@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "deploy": "cloudbase framework:deploy",
+    "lint": "vue-cli-service lint",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "deploy": "cloudbase hosting:deploy dist /memo-vue -e elvinn-1aa07a"
   },
   "dependencies": {
     "core-js": "^3.6.4",
