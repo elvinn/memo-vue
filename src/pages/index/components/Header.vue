@@ -57,7 +57,7 @@ export default {
         return;
       }
 
-      this.hasLogin = loginState.hasLogin
+      this.hasLogin = loginState.isCustomAuth
 
       const userInfo = await cloudBase.getUserInfo()
       this.nickName = userInfo.nickName
