@@ -23,6 +23,9 @@ jobs:
           apiKey: ${{secrets.TCB_API_KEY}}
         run: $(npm bin)/tcb login --apiKeyId "$apiKeyId" --apiKey "$apiKey"
 
+      - name: Build project
+        run: npm run build
+
       - name: Deploy to Tencent Cloudbase
         run: npm run deploy
 
