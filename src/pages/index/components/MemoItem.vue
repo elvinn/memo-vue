@@ -6,12 +6,16 @@
   />
   <el-input
     v-if="isEditable"
-    v-model="text" 
+    v-model="text"
+    ref="input"
     placeholder="请输入内容"
     size="small"
+    autocomplete="off"
     clearable
+    @compositionstart.native="isInComposition = true"
+    @compositionend.native="isInComposition = false"
     @blur="endEdit"
-    @change.native="endEdit"
+    @keydown.enter.native="endEdit"
   />
   <span
     v-else
@@ -36,6 +40,7 @@ export default {
   data() {
     return {
       isEditable: false,
+      isInComposition: false, // 正在用中日韩等输入法进行输入
       text: '',
     }
   },
@@ -55,12 +60,17 @@ export default {
     ]),
     startEdit() {
       this.isEditable = true
+      this.$nextTick(() => this.$refs.input.focus())
     },
     endEdit() {
+      if (this.isInComposition) {
+        return;
+      }
+
       this.isEditable = false
       this.editMemo({
         id: this.memo.id,
-        text: this.text,
+        text: this.text.trim(),
       })
     },
     toggle() {

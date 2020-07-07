@@ -1,10 +1,11 @@
 <template>
   <div>
     <el-input
-      autofocus
-      clearable
-      placeholder="记点什么吧？"
       v-model="input"
+      placeholder="记点什么吧？"
+      autocomplete="off"
+      clearable
+      autofocus
       @compositionstart.native="isInComposition = true"
       @compositionend.native="isInComposition = false"
       @keydown.enter.native="addMemo"
