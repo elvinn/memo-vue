@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "lint": "vue-cli-service lint",
-    "serve": "vue-cli-service serve",
+    "dev": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "deploy": "cloudbase hosting:deploy dist /memo-vue -e elvinn-1aa07a"
   },
