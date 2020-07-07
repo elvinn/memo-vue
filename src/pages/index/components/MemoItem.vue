@@ -76,6 +76,7 @@ export default {
     toggle() {
       this.toggleMemo({
         id: this.memo.id,
+        isDone: this.memo.isDone,
       })
     }
   },
