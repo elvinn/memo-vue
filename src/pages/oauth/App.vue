@@ -59,10 +59,17 @@ export default {
         return
       }
 
-      await cloudBase.updateUserInfo({
-        nickName,
-        avatarUrl,
-      })
+      try {
+        await cloudBase.updateUserInfo({
+          nickName,
+          avatarUrl,
+        })
+      } catch (e) {
+        // 更新用户信息失败不影响正常使用
+        console.error('更新用户信息失败', e);
+
+        // TODO: 外部项目的错误上报收集？
+      }
     },
 
     countDown() {
