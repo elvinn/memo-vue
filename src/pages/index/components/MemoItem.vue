@@ -95,6 +95,7 @@ export default {
 
   .memo-content {
     margin: 0 0.5em;
+    word-break: break-all;
 
     &.is-done {
       color: #bbb;
@@ -104,6 +105,7 @@ export default {
   .operations {
     display: flex;
     opacity: 0;
+    min-width: 3rem;
 
     i {
       color: #909399;
