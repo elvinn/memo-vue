@@ -9,8 +9,8 @@
 </template>
 
 <script>
-import loginUtil from '../../tools/login'
-import cloudBase from '../../tools/tcb'
+import * as loginUtil from '../../tools/login'
+import * as cloudBase from '../../tools/tcb'
 import { refreshAll } from '../../tools/globalEvent'
 
 const LOGIN_STATE = {
@@ -28,11 +28,11 @@ export default {
     }
   },
   created() {
-    this.login()
+    this.signIn()
     this.LOGIN_STATE = LOGIN_STATE
   },
   methods: {
-    async login() {
+    async signIn() {
       const searchParams = new URLSearchParams(location.search)
       const queryObj = {}
       for (const [key, value] of searchParams) {
@@ -40,7 +40,7 @@ export default {
       }
 
       try {
-        const aouthInfo = await loginUtil.login(queryObj)
+        const aouthInfo = await loginUtil.signIn(queryObj)
         this.loginState = LOGIN_STATE.SUCCESS
         await this.updateUserInfo(aouthInfo)
         refreshAll()
