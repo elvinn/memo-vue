@@ -9,7 +9,13 @@ npm install
 
 ### Compiles and hot-reloads for development
 ```
-npm run serve
+npm run dev
+```
+
+### Proxy local development
+
+```
+w2 add
 ```
 
 ### Compiles and minifies for production
