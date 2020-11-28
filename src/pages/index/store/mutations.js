@@ -1,4 +1,5 @@
 import * as CONST from './const'
+import * as server from './server'
 
 const findIndex = (memos = [], id) => {
   if (!id) {
@@ -12,10 +13,13 @@ const findIndex = (memos = [], id) => {
 
 const mutations = {
   [CONST.ADD_MEMO] (state, data) {
-    state.memos.unshift({
+    const newMemo = {
       ...data,
       ts: Date.now(),
-    })
+    }
+
+    state.memos.unshift(newMemo)
+    server.memoStore(CONST.ADD_MEMO, newMemo)
   },
 
   [CONST.DELETE_MEMO] (state, { id }) {
@@ -27,6 +31,7 @@ const mutations = {
     }
 
     memos.splice(index, 1)
+    server.memoStore(CONST.DELETE_MEMO, { id })
   },
 
   [CONST.EDIT_MEMO] (state, data) {
@@ -38,6 +43,7 @@ const mutations = {
     }
 
     Object.assign(memos[index], data)
+    server.memoStore(CONST.EDIT_MEMO, data)
   }
 }
 

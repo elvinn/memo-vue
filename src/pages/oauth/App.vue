@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div v-if="loginState === LOGIN_STATE.LOADING">正在登陆中...</div>
+    <div v-if="loginState === LOGIN_STATE.LOADING">正在登录中...</div>
     <div v-else-if="loginState === LOGIN_STATE.FAILED">登录失败，请稍后重试</div>
     <div v-else-if="loginState === LOGIN_STATE.SUCCESS">登录成功</div>
 
@@ -48,13 +48,14 @@ export default {
         this.loginState = LOGIN_STATE.FAILED
         console.error('登录失败', e)
       } finally {
-        this.countDown()
+        // this.countDown()
       }
     },
 
     async updateUserInfo({nickName, avatarUrl}) {
-      const preUserInfo = await cloudBase.getUserInfo()
-      if (preUserInfo.nickName) {
+      const userInfo = await cloudBase.getUserInfo()
+      console.log('--- userinfo', userInfo)
+      if (userInfo.nickName) {
         // 已通过第三方登录的用户，无需初始化用户信息
         return
       }
