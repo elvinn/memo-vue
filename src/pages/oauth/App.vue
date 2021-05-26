@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div v-if="loginState === LOGIN_STATE.LOADING">正在登陆中...</div>
+    <div v-if="loginState === LOGIN_STATE.LOADING">正在登录中...</div>
     <div v-else-if="loginState === LOGIN_STATE.FAILED">登录失败，请稍后重试</div>
     <div v-else-if="loginState === LOGIN_STATE.SUCCESS">登录成功</div>
 
