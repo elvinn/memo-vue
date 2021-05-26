@@ -10,7 +10,7 @@ module.exports = {
       entry: 'src/pages/oauth/main.js',
       template: 'public/index.html',
       filename: 'oauth.html',
-      title: '备忘录 - 登陆',
+      title: '备忘录 - 登录',
     },
   },
   publicPath: '/memo-vue',

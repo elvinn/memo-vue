@@ -20,7 +20,7 @@
         <template v-slot:dropdown>
           <el-dropdown-menu>
             <el-dropdown-item v-if="hasLogin" @click.native="signOut">退出登录</el-dropdown-item>
-            <el-dropdown-item v-else @click.native="handleGithubLogin">Github 登录</el-dropdown-item>
+            <el-dropdown-item v-else @click.native="handleGithubSignIn">Github 登录</el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
@@ -30,8 +30,8 @@
 
 <script>
 import { mapActions } from 'vuex'
-import login from '../../../tools/login'
-import cloudBase from '../../../tools/tcb'
+import * as login from '../../../tools/login'
+import * as cloudBase from '../../../tools/tcb'
 
 export default {
   name: 'Header',
@@ -49,7 +49,7 @@ export default {
       'clearDoneMemo',
       'clearAllMemo',
     ]),
-    handleGithubLogin() {
+    handleGithubSignIn() {
       login.jumpGithub()
     },
     async signOut() {

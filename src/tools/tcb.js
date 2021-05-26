@@ -1,67 +1,70 @@
-import tcb from 'tcb-js-sdk';
+// 腾讯云 TCB 的一些接口封装
+import tcb from '@cloudbase/js-sdk';
 
-class CloudBase {
-  constructor() {
-    this.app = tcb.init({ env: 'elvinn-1aa07a' })
-    this.auth = this.app.auth({
-      persistence: 'local',
-    })
+const app = tcb.init({ env: 'elvinn-1aa07a' })
+const auth = app.auth({
+  persistence: 'local',
+})
 
-    this.signInAnonymously()
-  }
+signInAnonymously()
 
-  async signOut() {
-    return this.auth.signOut()
-  }
-
-  async getUserInfo() {
-    window.x = this.auth.currentUser
-    return this.auth.currentUser
-  }
-
-  async updateUserInfo(userInfo) {
-    const user = this.auth.currentUser
-    if (!user) {
-      throw new Error('未获取当前用户')
-    }
-    
-    return user.update(userInfo)
-  }
-
-  async signInAnonymously() {
-    if (!this.auth.hasLoginState()) {
-      this.auth.signInAnonymously()
-    }
-  }
-
-  async callFunction(options) {
-    console.log('callFunction', options)
-    try {
-      const {
-        requestId,
-        result = {},
-      } = await this.app.callFunction(options)
-      console.log('callFunction result', requestId, result)
-      return { requestId, ...result}
-    } catch (e) {
-      console.error('callFunction error', e)
-      return { ret: -999, retMesg: '云函数请求失败'}
-    }
-  }
-
-  async loginByTicket(ticket) {
-    if (!ticket) {
-      return
-    }
-
-    return this.auth.signInWithTicket(ticket)
-  }
-
-  onLoginStateChanged(func = (loginState) => console.log('loginState:', loginState)) {
-    this.auth.onLoginStateChanged(func)
+async function signInAnonymously() {
+  if (!auth.hasLoginState()) {
+    auth.anonymousAuthProvider().signIn()
   }
 }
 
-const cloudBase = new CloudBase()
+async function signOut() {
+  return auth.signOut()
+}
 
-export default cloudBase
+async function getUserInfo() {
+  return auth.currentUser
+}
+
+async function updateUserInfo(userInfo) {
+  const user = auth.currentUser
+  if (!user) {
+    throw new Error('未获取当前用户')
+  }
+
+  return user.update(userInfo)
+}
+
+async function callFunction(options) {
+  console.log('callFunction', options)
+  try {
+    const {
+      requestId,
+      result = {},
+    } = await app.callFunction(options)
+    console.log('callFunction result', requestId, result)
+    return { requestId, ...result }
+  } catch (e) {
+    console.error('callFunction error', e)
+    return { ret: -999, retMesg: '云函数请求失败' }
+  }
+}
+
+async function loginByTicket(ticket) {
+  if (!ticket) {
+    return
+  }
+
+  return auth.signInWithTicket(ticket)
+}
+
+function onLoginStateChanged(func = (loginState) => console.log('loginState:', loginState)) {
+  auth.onLoginStateChanged(func)
+}
+
+
+export {
+  signInAnonymously,
+  signOut,
+  getUserInfo,
+  updateUserInfo,
+  callFunction,
+  loginByTicket,
+  onLoginStateChanged,
+}

@@ -9,9 +9,9 @@
     "deploy": "cloudbase hosting:deploy dist /memo-vue -e elvinn-1aa07a"
   },
   "dependencies": {
+    "@cloudbase/js-sdk": "^1.3.3",
     "core-js": "^3.6.4",
     "element-ui": "^2.4.5",
-    "tcb-js-sdk": "^1.7.1",
     "vue": "^2.6.11",
     "vuex": "^3.4.0"
   },

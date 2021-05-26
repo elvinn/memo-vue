@@ -1,59 +1,67 @@
-import cloudBase from './tcb'
+// 对于腾讯云 TCB 登录接口的封装
+import * as cloudBase from './tcb'
 
-class Login {
-  jumpGithub() {
-    window.open('https://github.com/login/oauth/authorize?client_id=c6ce12053e8fa1513f98')
-  }
+function jumpGithub() {
+  window.open('https://github.com/login/oauth/authorize?client_id=c6ce12053e8fa1513f98')
+}
 
-  async getOauthInfo({
-    from,
-    code,
-  }) {
-    const {
-      ret,
-      data: {
-        ticket,
-        nickName,
-        avatarUal,
-      } = {},
-    } = await cloudBase.callFunction({
-      name: 'oauth',
-      data: {
-        type: from,
-        code,
-      }
-    })
-
-    if (ret) {
-      return
-    }
-
-    return {
+async function getOauthInfo({
+  from,
+  code,
+}) {
+  const {
+    ret,
+    data: {
       ticket,
       nickName,
       avatarUal,
+    } = {},
+  } = await cloudBase.callFunction({
+    name: 'oauth',
+    data: {
+      type: from,
+      code,
     }
-  } 
+  })
 
-  async login({
-    from,
-    code,
-  }) {
-    const oauthInfo = await this.getOauthInfo({ from, code })
-    if (!oauthInfo) {
-      throw new Error('登陆失败')
-    }
-    
-    await cloudBase.loginByTicket(oauthInfo.ticket)
-
-    return oauthInfo
+  if (ret) {
+    return
   }
 
-  async signOut() {
-    return cloudBase.signOut()
+  return {
+    ticket,
+    nickName,
+    avatarUal,
   }
 }
 
-const login = new Login();
+async function signIn({
+  from,
+  code,
+}) {
+  const oauthInfo = await this.getOauthInfo({ from, code })
+  if (!oauthInfo) {
+    throw new Error('登陆失败')
+  }
 
-export default login;
+  await cloudBase.loginByTicket(oauthInfo.ticket)
+
+  return oauthInfo
+}
+
+async function signOut() {
+  return cloudBase.signOut()
+}
+
+async function isCustomLogin() {
+  const { loginType } = await cloudBase.getUserInfo()
+  return loginType === 'CUSTOM'
+}
+
+export {
+  jumpGithub,
+  getOauthInfo,
+  signIn,
+  signOut,
+  isCustomLogin,
+};

@@ -9,8 +9,8 @@
 </template>
 
 <script>
-import loginUtil from '../../tools/login'
-import cloudBase from '../../tools/tcb'
+import * as loginUtil from '../../tools/login'
+import * as cloudBase from '../../tools/tcb'
 import { refreshAll } from '../../tools/globalEvent'
 
 const LOGIN_STATE = {
@@ -28,11 +28,11 @@ export default {
     }
   },
   created() {
-    this.login()
+    this.signIn()
     this.LOGIN_STATE = LOGIN_STATE
   },
   methods: {
-    async login() {
+    async signIn() {
       const searchParams = new URLSearchParams(location.search)
       const queryObj = {}
       for (const [key, value] of searchParams) {
@@ -40,7 +40,7 @@ export default {
       }
 
       try {
-        const aouthInfo = await loginUtil.login(queryObj)
+        const aouthInfo = await loginUtil.signIn(queryObj)
         this.loginState = LOGIN_STATE.SUCCESS
         await this.updateUserInfo(aouthInfo)
         refreshAll()
@@ -48,13 +48,14 @@ export default {
         this.loginState = LOGIN_STATE.FAILED
         console.error('登录失败', e)
       } finally {
-        this.countDown()
+        // this.countDown()
       }
     },
 
     async updateUserInfo({nickName, avatarUrl}) {
-      const preUserInfo = await cloudBase.getUserInfo()
-      if (preUserInfo.nickName) {
+      const userInfo = await cloudBase.getUserInfo()
+      console.log('--- userinfo', userInfo)
+      if (userInfo.nickName) {
         // 已通过第三方登录的用户，无需初始化用户信息
         return
       }
